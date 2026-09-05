@@ -4,6 +4,20 @@ CRM lead routing and webhook automation. Incoming leads are validated, normalize
 
 Demo environment. All contacts and companies are fictional. This project never talks to live HubSpot, Pipedrive, or Zoho accounts.
 
+## Product walkthrough
+
+![PipelineSync overview](screenshots/01-dashboard-overview.png)
+
+The operator dashboard tracks lead volume, qualification, duplicate rate, delivery health, and recent failures.
+
+![Lead intake simulator](screenshots/02-intake-simulator.png)
+
+The intake simulator exposes the normalized request payload before it enters deduplication, routing, and asynchronous delivery.
+
+![Lead detail](screenshots/03-lead-detail.png)
+
+Each lead keeps its normalized contact data, attribution, routing decision, delivery history, audit log, and raw payload in one place.
+
 ## Architecture
 
 ```mermaid
