@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: pipelinesync
+          POSTGRES_PASSWORD: pipelinesync
+          POSTGRES_DB: pipelinesync
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pipelinesync -d pipelinesync"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql+asyncpg://pipelinesync:pipelinesync@localhost:5432/pipelinesync
+      REDIS_URL: redis://localhost:6379/0
+      SECRET_KEY: ci-secret-key
+      TESTING: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Migrate
+        run: alembic upgrade head
+        env:
+          TESTING: "false"
+      - name: Lint
+        run: ruff check app tests
+      - name: Format
+        run: ruff format --check app tests
+      - name: Typecheck
+        run: mypy app
+      - name: Test
+        run: pytest
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build
