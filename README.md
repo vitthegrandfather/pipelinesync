@@ -2,6 +2,8 @@
 
 CRM lead routing and webhook automation. Incoming leads are validated, normalized, checked for duplicates, routed by ordered rules, and delivered to a **sandbox** CRM adapter.
 
+**[Open the interactive demo](https://pipelinesync-showcase.vercel.app)**
+
 Demo environment. All contacts and companies are fictional. This project never talks to live HubSpot, Pipedrive, or Zoho accounts.
 
 ## Interactive showcase
