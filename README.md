@@ -4,6 +4,21 @@ CRM lead routing and webhook automation. Incoming leads are validated, normalize
 
 Demo environment. All contacts and companies are fictional. This project never talks to live HubSpot, Pipedrive, or Zoho accounts.
 
+## Interactive showcase
+
+The `showcase/` directory contains a self-contained browser walkthrough with fictional data.
+It demonstrates validation, routing, duplicate handling, delivery failures, retries, and audit
+history without requiring CRM credentials.
+
+```bash
+cd showcase
+npm ci
+npm run dev
+```
+
+The API and worker implementation remain in `backend/`; `showcase/` is the reviewer-friendly
+portfolio surface.
+
 ## Product walkthrough
 
 ![PipelineSync overview](screenshots/01-dashboard-overview.png)

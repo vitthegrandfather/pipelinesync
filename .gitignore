@@ -10,5 +10,9 @@ __pycache__/
 htmlcov/
 node_modules/
 dist/
+.output/
+.vercel/
+.tanstack/
+.nitro/
 .DS_Store
 pgdata/
