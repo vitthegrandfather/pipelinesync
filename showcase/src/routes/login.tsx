@@ -12,7 +12,11 @@ function Login() {
   const [busy, setBusy] = useState(false);
 
   if (isPending) {
-    return <main className="grid min-h-screen place-items-center bg-background text-sm text-muted">Loading session…</main>;
+    return (
+      <main className="grid min-h-screen place-items-center bg-background text-sm text-muted">
+        Loading session…
+      </main>
+    );
   }
   if (user) return <Navigate to="/dashboard" />;
 
